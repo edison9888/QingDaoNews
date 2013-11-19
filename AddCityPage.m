@@ -27,11 +27,6 @@
 {
     [super viewDidLoad];
     [self _initNavigationBar];
-    [self _initAddCity];
-}
-- (void)_initAddCity
-{
-    NSLog(@"添加城市");
 }
 #pragma mark -初始化导航栏
 - (void)_initNavigationBar
