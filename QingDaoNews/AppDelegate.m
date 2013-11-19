@@ -7,16 +7,43 @@
 //
 
 #import "AppDelegate.h"
-
+#import "LeftPage.h"
+#import "RightPage.h"
 @implementation AppDelegate
-
+@synthesize homeNav=_homeNav;
+@synthesize homePage=_homePage;
+@synthesize menuController=_menuController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+
+    self.homePage=[[HomePage alloc]init];
+    self.homeNav=[[UINavigationController alloc]initWithRootViewController:self.homePage];
+    self.homeNav.title=@"青岛新闻";
+    [self.homeNav setNavigationBarHidden:YES];
+    DDMenuController *rootController=[[DDMenuController alloc]initWithRootViewController:self.homeNav];
+    
+    _menuController=rootController;
+    
+    LeftPage *leftPage=[[LeftPage alloc]init];
+    rootController.leftViewController=leftPage;
+    
+    RightPage *rightPage=[[RightPage alloc]init];
+    rootController.rightViewController=rightPage;
+    
+    [self performSelector:@selector(setIndexPage:) withObject:rootController afterDelay:2];
+    
     return YES;
+}
+-(void)setIndexPage:(DDMenuController *)rootController{
+    
+    [UIApplication sharedApplication].statusBarHidden = NO;
+    
+    self.window.rootViewController = rootController;
+    [self.window makeKeyAndVisible];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
